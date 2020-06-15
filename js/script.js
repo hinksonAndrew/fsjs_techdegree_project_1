@@ -2,14 +2,9 @@
 Treehouse FSJS Techdegree:
 project 1 - A Random Quote Generator
 ******************************************/
-
-// For assistance: 
-  // Check the "Project Resources" section of the project instructions
-  // Reach out in your Slack community - https://treehouse-fsjs-102.slack.com/app_redirect?channel=chit-chat
-
-/*** 
- * `quotes` array 
-***/
+/*
+Array of Quote Objects
+*/
 
 const quotes = [
   {
@@ -61,30 +56,35 @@ const quotes = [
   }
 ];
 
-
-
-/***
- * `getRandomQuote` function
-***/
+/*
+getRandomQuote() gets a random number based on the length of the quotes array and returns a random quote object
+*/
 
 function getRandomQuote() {
   const randomNumber = Math.floor(Math.random()*quotes.length);
   return quotes[randomNumber];
 }
 
+/*
+getRandomRGB() gets a random number from 0 to 255 and returns a random rgb value
+*/
+
 function getRandomRGB() {
-  return Math.floor(Math.random() * 256);
+  return `rgb(${Math.floor(Math.random() * 256)},${Math.floor(Math.random() * 256)},${Math.floor(Math.random() * 256)})`;
 }
 
-/***
- * `printQuote` function
-***/
+/*
+printQuote() returns a string value that contains all the info from the a quote objects. If it doesn't contain a certain key then it
+doesnt show. In order to get the page contect to reload at a set interval I had to wrap the entire body of the printQuote function in a
+setInterval. There are a couple of issues. You have to remove the event listener so that multiple button clicks dont backlog more intervals
+and printQuote() does not run the first time. This way actually makes the button useless after first click.
+*/
 function printQuote() {
   document.getElementById('load-quote').removeEventListener("click", printQuote, false);
   setInterval(function() {
     let quoteObj = getRandomQuote();
 
-    document.body.style.backgroundColor = `rgb(${getRandomRGB()}, ${getRandomRGB()}, ${getRandomRGB()})`
+    document.body.style.backgroundColor = getRandomRGB();
 
     let html = `<p class="quote">${quoteObj.quote}</p>`;
     html += `<p class="source">${quoteObj.source}`;
