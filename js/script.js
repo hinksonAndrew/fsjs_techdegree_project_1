@@ -93,11 +93,14 @@ function printQuote() {
   }
   html += "</p>";
   
-  document.body.style.backgroundColor = getRandomRGB();
+  document.body.style.backgroundColor = getRandomRGB(); //sets background to random color whenever called
 
   return document.getElementById('quote-box').innerHTML = html;
 }
 
+/*
+Added setInterval to refresh content/quote every 5 seconds
+*/
 setInterval(printQuote, 5000);
 
 
