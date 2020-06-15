@@ -75,34 +75,30 @@ function getRandomRGB() {
 
 /*
 printQuote() returns a string value that contains all the info from the a quote objects. If it doesn't contain a certain key then it
-doesnt show. In order to get the page contect to reload at a set interval I had to wrap the entire body of the printQuote function in a
-setInterval. There are a couple of issues. You have to remove the event listener so that multiple button clicks dont backlog more intervals
-and printQuote() does not run the first time. This way actually makes the button useless after first click.
+doesnt show. 
 */
 function printQuote() {
-  document.getElementById('load-quote').removeEventListener("click", printQuote, false);
-  setInterval(function() {
-    let quoteObj = getRandomQuote();
+  let quoteObj = getRandomQuote();
 
-    document.body.style.backgroundColor = getRandomRGB();
+  let html = `<p class="quote">${quoteObj.quote}</p>`;
+  html += `<p class="source">${quoteObj.source}`;
+  if (quoteObj.citation) {
+    html += `<span class="citation">${quoteObj.citation}</span>`
+  }
+  if (quoteObj.year) {
+    html += `<span class="year">${quoteObj.year}</span>`;
+  }
+  if (quoteObj.tag) {
+    html += `<span class="tag"> [${quoteObj.tag}]</span>`;
+  }
+  html += "</p>";
+  
+  document.body.style.backgroundColor = getRandomRGB();
 
-    let html = `<p class="quote">${quoteObj.quote}</p>`;
-    html += `<p class="source">${quoteObj.source}`;
-    if (quoteObj.citation) {
-      html += `<span class="citation">${quoteObj.citation}</span>`
-    }
-    if (quoteObj.year) {
-      html += `<span class="year">${quoteObj.year}</span>`;
-    }
-    if (quoteObj.tag) {
-      html += `<span class="tag"> [${quoteObj.tag}]</span>`;
-    }
-    html += "</p>";
-    
-    return document.getElementById('quote-box').innerHTML = html;
-  }, 5000);
+  return document.getElementById('quote-box').innerHTML = html;
 }
 
+setInterval(printQuote, 5000);
 
 
 /***
